@@ -1,22 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Header } from './src/Components/Header';
+import { AddTodoForm } from './src/Components/AddTodoForm';
+import { TodoList } from './src/Components/TodoList';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => console.log('pressed!')}>
-        <Text>Hello world1244</Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
+      <Header />
+      <AddTodoForm/>
+      <TodoList />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
