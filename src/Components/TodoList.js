@@ -1,20 +1,26 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import { TodoItem } from './TodoItem';
 
 export const TodoList = (props) => {
-  const { todos } = props;
-  console.log(todos.length);
+  const { todos, onChangeTodoStatus } = props;
+
   return (
-    <View style={style.box}>
-      {todos.map(todo => <TodoItem key={todo.id} todo={todo} />)}
-      <TodoItem />
-    </View>
+    <SafeAreaView style={styles.box}>
+      <FlatList
+        data={todos}
+        renderItem={({item}) => (
+          <TodoItem todo={item} onChangeTodoStatus={onChangeTodoStatus} />
+        )}
+        keyExtractor={item => item.id}
+      />
+    </SafeAreaView>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   box: {
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
+    marginBottom: 16,
   }
 });
