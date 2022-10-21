@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Header } from './src/Components/Header';
 import { AddTodoForm } from './src/Components/AddTodoForm';
 import { TodoList } from './src/Components/TodoList';
-import { addTodo, getTodos, UserId } from './src/utiles/api';
+import { addTodo, changeTodoById, getTodos, UserId } from './src/utiles/api';
 import { Loader } from './src/Components/Loader';
 
 export default function App() {
@@ -16,13 +16,14 @@ export default function App() {
     setIsLoading(true);
     setIsError(false);
     getTodos()
-      .then(res => setTodos(res))
+      .then(setTodos)
       .catch(() => setIsError(true))
       .finally(() => setIsLoading(false));
   }, []);
 
   const addNewTodoHandler = (todoTitle) => {
     setIsNewTodoLoading(true);
+    setIsError(false);
     const newTodo = {
       title: todoTitle,
       userId: UserId,
@@ -38,12 +39,35 @@ export default function App() {
 
   };
 
+  const todoStatusToggle = (id) => {
+    setIsNewTodoLoading(true);
+    setIsError(false);
+
+    const completed = !todos.find(todo => todo.id === id).completed;
+    changeTodoById(id, { completed })
+      .then((res) => {
+        setTodos((prev) => {
+          return [...prev].map(todo => {
+            if (todo.id === res.id) {
+              return res;
+            }
+
+            return todo;
+          });
+        });
+      })
+      .catch(() => setIsError(true))
+      .finally(() => setIsNewTodoLoading(false));
+  };
+
   return (
     <View style={styles.container}>
       <Header />
       <AddTodoForm onAddTodo={addNewTodoHandler}/>
       {isError && <Text>Something went wrong!</Text>}
-      {!isLoading && !isError && todos.length > 0 && <TodoList todos={todos} />}
+      {!isLoading && !isError && todos.length > 0 && (
+        <TodoList todos={todos} onChangeTodoStatus={todoStatusToggle}/>
+      )}
       {(isLoading || isNewTodoLoading) && <Loader />}
     </View>
   );

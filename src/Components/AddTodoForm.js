@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Button, TextInput, View, StyleSheet } from 'react-native';
+import { Button, TextInput, View, StyleSheet, Alert } from 'react-native';
 
 export const AddTodoForm = (props) => {
   const { onAddTodo } = props;
   const [todoTitle, setTodoTitle] = useState('');
 
-  const addTodoHandler = () => {
-    onAddTodo(todoTitle);
-    setTodoTitle('');
+  const pressBtnHandler = () => {
+    if (todoTitle.trim().length) {
+      onAddTodo(todoTitle);
+      setTodoTitle('');
+    } else {
+      Alert.alert('You can\'t add an empty todo!');
+    }
   };
 
   return (
@@ -15,11 +19,13 @@ export const AddTodoForm = (props) => {
       <TextInput
         style={style.textInput}
         value={todoTitle}
-        onChangeText={(value) => setTodoTitle(value)}
+        onChangeText={setTodoTitle}
         placeholder="Input todo title"
+        autoCorrect={false}
+
       />
       <Button
-        onPress={addTodoHandler}
+        onPress={pressBtnHandler}
         title="Add todo"
       />
     </View>
