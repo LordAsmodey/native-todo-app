@@ -15,9 +15,9 @@ export const AddTodoForm = (props) => {
   };
 
   return (
-    <View style={style.wrapper}>
+    <View style={styles.wrapper}>
       <TextInput
-        style={style.textInput}
+        style={styles.textInput}
         value={todoTitle}
         onChangeText={setTodoTitle}
         placeholder="Input todo title"
@@ -32,7 +32,7 @@ export const AddTodoForm = (props) => {
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',

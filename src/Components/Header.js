@@ -3,13 +3,13 @@ import { Text, View, StyleSheet } from 'react-native';
 
 export const Header = () => {
   return (
-    <View style={style.header}>
+    <View style={styles.header}>
       <Text>Todo List</Text>
     </View>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   header : {
     height: 60,
     justifyContent: 'flex-end',

@@ -1,5 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
+import { DeleteTodo } from './DeleteTodo';
+import { EditTodo } from './EditTodo';
 
 export const TodoItem = (props) => {
   const { todo, onChangeTodoStatus } = props;
@@ -16,21 +19,28 @@ export const TodoItem = (props) => {
   const completedStyles = setCompletedStyles();
 
   return (
-    <View>
-      <TouchableHighlight
-        style={style.box}
-        activeOpacity={0.3}
-        underlayColor="#46adf6"
-        onPress={() => onChangeTodoStatus(todo.id)}>
-        <Text style={[style.text, completedStyles]}>{todo.title}</Text>
-      </TouchableHighlight>
-    </View>
+    <GestureHandlerRootView>
+      <Swipeable
+        renderRightActions={DeleteTodo}
+        renderLeftActions={EditTodo}
+      >
+        <View>
+          <TouchableHighlight
+            style={styles.box}
+            activeOpacity={0.3}
+            underlayColor="#46adf6"
+            onPress={() => onChangeTodoStatus(todo.id)}>
+            <Text style={[styles.text, completedStyles]}>{todo.title}</Text>
+          </TouchableHighlight>
+        </View>
+      </Swipeable>
+    </GestureHandlerRootView>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   box: {
-    height: 32,
+    height: 40,
     marginBottom: 5,
     backgroundColor: '#eee',
     borderRadius: 8,

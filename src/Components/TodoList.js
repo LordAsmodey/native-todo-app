@@ -6,7 +6,7 @@ export const TodoList = (props) => {
   const { todos, onChangeTodoStatus } = props;
 
   return (
-    <SafeAreaView style={style.box}>
+    <SafeAreaView style={styles.box}>
       <FlatList
         data={todos}
         renderItem={({item}) => (
@@ -18,7 +18,7 @@ export const TodoList = (props) => {
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   box: {
     paddingHorizontal: 16,
     marginBottom: 16,
