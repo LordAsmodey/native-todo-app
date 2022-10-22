@@ -1,28 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import { Header } from './src/Components/Header';
 import { AddTodoForm } from './src/Components/AddTodoForm';
 import { TodoList } from './src/Components/TodoList';
-import { addTodo, changeTodoById, getTodos, UserId } from './src/utiles/api';
+import {
+  addTodo,
+  deleteTodoById,
+  editTodoById,
+  getTodos,
+  UserId
+} from './src/utiles/api';
 import { Loader } from './src/Components/Loader';
 
 export default function App() {
   const [todos, setTodos] = useState([]);
+  const [isMainDataLoading, setIsMainDataLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isNewTodoLoading, setIsNewTodoLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsMainDataLoading(true);
     setIsError(false);
     getTodos()
       .then(setTodos)
       .catch(() => setIsError(true))
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsMainDataLoading(false));
   }, []);
 
-  const addNewTodoHandler = (todoTitle) => {
-    setIsNewTodoLoading(true);
+  const addNewTodoHandler = useCallback((todoTitle) => {
+    setIsLoading(true);
     setIsError(false);
     const newTodo = {
       title: todoTitle,
@@ -35,16 +41,17 @@ export default function App() {
         setTodos((prev) => [...prev, todo]);
       })
       .catch(() => setIsError(true))
-      .finally(() => setIsNewTodoLoading(false));
+      .finally(() => setIsLoading(false));
 
-  };
+  }, []);
 
   const todoStatusToggle = (id) => {
-    setIsNewTodoLoading(true);
+    setIsLoading(true);
     setIsError(false);
 
     const completed = !todos.find(todo => todo.id === id).completed;
-    changeTodoById(id, { completed })
+
+    editTodoById(id, { completed })
       .then((res) => {
         setTodos((prev) => {
           return [...prev].map(todo => {
@@ -57,24 +64,44 @@ export default function App() {
         });
       })
       .catch(() => setIsError(true))
-      .finally(() => setIsNewTodoLoading(false));
+      .finally(() => setIsLoading(false));
+  };
+
+  const deleteTodoHandler = (id) => {
+    setIsLoading(true);
+    deleteTodoById(id)
+      .then(() => setTodos((prev) => [...prev].filter(todo => todo.id !== id)))
+      .catch(() => setIsError(true))
+      .finally(() => setIsLoading(false));
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header />
       <AddTodoForm onAddTodo={addNewTodoHandler}/>
-      {isError && <Text>Something went wrong!</Text>}
-      {!isLoading && !isError && todos.length > 0 && (
-        <TodoList todos={todos} onChangeTodoStatus={todoStatusToggle}/>
+      {isError && (
+        <Text style={styles.errorText}>
+          Something went wrong!
+        </Text>
       )}
-      {(isLoading || isNewTodoLoading) && <Loader />}
-    </View>
+      {!isMainDataLoading && !isError && todos.length > 0 && (
+        <TodoList
+          todos={todos}
+          onChangeTodoStatus={todoStatusToggle}
+          onDeleteTodo={deleteTodoHandler}
+        />
+      )}
+      {(isMainDataLoading || isLoading) && <Loader />}
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
+  },
+  errorText: {
+    color: 'red',
   },
 });

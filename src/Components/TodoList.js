@@ -1,20 +1,23 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { TodoItem } from './TodoItem';
 
 export const TodoList = (props) => {
-  const { todos, onChangeTodoStatus } = props;
+  const { todos, onChangeTodoStatus, onDeleteTodo } = props;
 
   return (
-    <SafeAreaView style={styles.box}>
-      <FlatList
-        data={todos}
-        renderItem={({item}) => (
-          <TodoItem todo={item} onChangeTodoStatus={onChangeTodoStatus} />
-        )}
-        keyExtractor={item => item.id}
-      />
-    </SafeAreaView>
+    <FlatList
+      style={styles.box}
+      data={todos}
+      renderItem={({item}) => (
+        <TodoItem
+          todo={item}
+          onChangeTodoStatus={onChangeTodoStatus}
+          onDeleteTodo={onDeleteTodo}
+        />
+      )}
+      keyExtractor={item => String(item.id)}
+    />
   );
 };
 

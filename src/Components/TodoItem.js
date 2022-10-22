@@ -5,7 +5,7 @@ import { DeleteTodo } from './DeleteTodo';
 import { EditTodo } from './EditTodo';
 
 export const TodoItem = (props) => {
-  const { todo, onChangeTodoStatus } = props;
+  const { todo, onChangeTodoStatus, onDeleteTodo } = props;
 
   const setCompletedStyles = () => {
     if (todo.completed) {
@@ -22,7 +22,7 @@ export const TodoItem = (props) => {
     <GestureHandlerRootView>
       <Swipeable
         renderRightActions={DeleteTodo}
-        renderLeftActions={EditTodo}
+        onSwipeableOpen={() => onDeleteTodo(todo.id)}
       >
         <View>
           <TouchableHighlight
@@ -40,7 +40,7 @@ export const TodoItem = (props) => {
 
 const styles = StyleSheet.create({
   box: {
-    height: 40,
+    height: 50,
     marginBottom: 5,
     backgroundColor: '#eee',
     borderRadius: 8,

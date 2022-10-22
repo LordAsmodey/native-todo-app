@@ -21,13 +21,21 @@ export const addTodo = (todo) => {
     .catch(error => console.log('Error: ' + error));
 };
 
-export const changeTodoById = (id, data) => {
+export const editTodoById = (id, data) => {
   return fetch(`${todosUrl}/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data),
+  })
+    .then(res => res.json())
+    .catch(error => console.log('Error: ' + error));
+};
+
+export const deleteTodoById = (id) => {
+  return fetch(`${todosUrl}/${id}`, {
+    method: 'DELETE'
   })
     .then(res => res.json())
     .catch(error => console.log('Error: ' + error));
