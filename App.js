@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Header } from './src/Components/Header';
 import { AddTodoForm } from './src/Components/AddTodoForm';
 import { TodoList } from './src/Components/TodoList';
@@ -76,7 +77,10 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <LinearGradient
+      colors={['#0dc7ff', '#00d199']}
+      style={styles.container}
+    >
       <Header />
       <AddTodoForm onAddTodo={addNewTodoHandler}/>
       {isError && (
@@ -92,7 +96,7 @@ export default function App() {
         />
       )}
       {(isMainDataLoading || isLoading) && <Loader />}
-    </SafeAreaView>
+    </LinearGradient>
   );
 }
 
