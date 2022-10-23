@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { AppTextBold } from './ui/AppTextBold';
 
 export const Header = () => {
   return (
     <View style={styles.header}>
-      <Text>Todo List</Text>
+      <AppTextBold>Todo List</AppTextBold>
     </View>
   );
 };

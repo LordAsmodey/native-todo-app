@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Font from 'expo-font';
 import { Header } from './src/Components/Header';
 import { AddTodoForm } from './src/Components/AddTodoForm';
 import { TodoList } from './src/Components/TodoList';
@@ -12,6 +13,7 @@ import {
   UserId
 } from './src/utiles/api';
 import { Loader } from './src/Components/Loader';
+import { AppTextBold } from './src/Components/ui/AppTextBold';
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -19,13 +21,22 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const loadFonts = () => {
+    return Font.loadAsync({
+      'ex2-bold': require('./assets/fonts/Exo2-Bold.ttf'),
+      'ex2-regular': require('./assets/fonts/Exo2-Regular.ttf'),
+    });
+  };
+
   useEffect(() => {
     setIsMainDataLoading(true);
     setIsError(false);
-    getTodos()
-      .then(setTodos)
-      .catch(() => setIsError(true))
-      .finally(() => setIsMainDataLoading(false));
+    loadFonts().then(() => {
+      getTodos()
+        .then(setTodos)
+        .catch(() => setIsError(true))
+        .finally(() => setIsMainDataLoading(false));
+    });
   }, []);
 
   const addNewTodoHandler = useCallback((todoTitle) => {
@@ -81,21 +92,27 @@ export default function App() {
       colors={['#0dc7ff', '#00d199']}
       style={styles.container}
     >
-      <Header />
-      <AddTodoForm onAddTodo={addNewTodoHandler}/>
-      {isError && (
-        <Text style={styles.errorText}>
-          Something went wrong!
-        </Text>
-      )}
-      {!isMainDataLoading && !isError && todos.length > 0 && (
-        <TodoList
-          todos={todos}
-          onChangeTodoStatus={todoStatusToggle}
-          onDeleteTodo={deleteTodoHandler}
-        />
-      )}
-      {(isMainDataLoading || isLoading) && <Loader />}
+      {isMainDataLoading
+        ? (<Loader />)
+        : (
+          <>
+            <Header />
+            <AddTodoForm onAddTodo={addNewTodoHandler}/>
+            {isError && (
+              <AppTextBold style={styles.errorText}>
+                Something went wrong!
+              </AppTextBold>
+            )}
+            {!isError && todos.length > 0 && (
+              <TodoList
+                todos={todos}
+                onChangeTodoStatus={todoStatusToggle}
+                onDeleteTodo={deleteTodoHandler}
+              />
+            )}
+            {isLoading && <Loader />}
+          </>
+        )}
     </LinearGradient>
   );
 }
