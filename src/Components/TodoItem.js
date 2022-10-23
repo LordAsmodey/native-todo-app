@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
 import { DeleteTodo } from './DeleteTodo';
-import { EditTodo } from './EditTodo';
+import { AppText } from './ui/AppText';
 
 export const TodoItem = (props) => {
   const { todo, onChangeTodoStatus, onDeleteTodo } = props;
@@ -25,13 +25,12 @@ export const TodoItem = (props) => {
         onSwipeableOpen={() => onDeleteTodo(todo.id)}
       >
         <View>
-          <TouchableHighlight
+          <TouchableOpacity
             style={styles.box}
-            activeOpacity={0.3}
-            underlayColor="#46adf6"
+            activeOpacity={0.5}
             onPress={() => onChangeTodoStatus(todo.id)}>
-            <Text style={[styles.text, completedStyles]}>{todo.title}</Text>
-          </TouchableHighlight>
+            <AppText style={{...styles.text, ...completedStyles}}>{todo.title}</AppText>
+          </TouchableOpacity>
         </View>
       </Swipeable>
     </GestureHandlerRootView>

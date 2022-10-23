@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { AppTextBold } from './ui/AppTextBold';
 
 export const Header = () => {
   return (
     <View style={styles.header}>
-      <Text>Todo List</Text>
+      <AppTextBold>Todo List</AppTextBold>
     </View>
   );
 };
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#46adf6',
+    backgroundColor: '#0dc7ff',
     paddingBottom: 8,
     marginBottom: 16,
   }
