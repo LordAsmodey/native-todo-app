@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { THEME } from '../theme/theme';
 import { AppTextBold } from './ui/AppTextBold';
 
 export const Header = () => {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#0dc7ff',
+    backgroundColor: THEME.COLOR_BLUE,
     paddingBottom: 8,
     marginBottom: 16,
   }

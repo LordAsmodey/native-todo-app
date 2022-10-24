@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet, Alert } from 'react-native';
+import { THEME } from '../theme/theme';
 
 export const AddTodoForm = (props) => {
   const { onAddTodo } = props;
@@ -40,9 +41,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   textInput: {
-    width: '60%',
+    width: '65%',
     borderBottomWidth: 1,
-    borderColor: '#c5c5c5',
+    borderColor: THEME.COLOR_DARK_GRAY,
     fontSize: 16,
 
   },
