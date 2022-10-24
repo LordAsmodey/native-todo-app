@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "native1",
-    "slug": "native1",
+    "slug": "native-todoapp",
+    "owner": "olegvetrov",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
