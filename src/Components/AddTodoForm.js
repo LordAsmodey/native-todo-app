@@ -28,6 +28,7 @@ export const AddTodoForm = (props) => {
       <Button
         onPress={pressBtnHandler}
         title="Add todo"
+        color={THEME.COLOR_ORANGE}
       />
     </View>
   );

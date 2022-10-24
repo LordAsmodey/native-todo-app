@@ -12,7 +12,7 @@ export const TodoItem = (props) => {
     if (todo.completed) {
       return {
         opacity: 0.3,
-        textDecorationLine: 'underline line-through',
+        textDecorationLine: 'line-through',
       };
     }
   };

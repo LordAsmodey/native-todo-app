@@ -16,6 +16,7 @@ import {
 } from './src/utiles/api';
 import { Loader } from './src/Components/Loader';
 import { AppTextBold } from './src/Components/ui/AppTextBold';
+import { EmptyTodoList } from './src/Components/EmptyTodoList';
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -117,6 +118,9 @@ export default function App() {
           onDeleteTodo={deleteTodoHandler}
         />
       )}
+      {!isError && todos.length === 0 && (
+        <EmptyTodoList />
+      )}
       {isLoading && <Loader />}
     </LinearGradient>
   );
@@ -127,6 +131,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   errorText: {
-    color: 'red',
+    color: THEME.COLOR_RED,
   },
 });
