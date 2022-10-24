@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { THEME } from './src/theme/theme';
 import { Header } from './src/Components/Header';
 import { AddTodoForm } from './src/Components/AddTodoForm';
 import { TodoList } from './src/Components/TodoList';
@@ -99,7 +100,7 @@ export default function App() {
 
   return (
     <LinearGradient
-      colors={['#0dc7ff', '#00d199']}
+      colors={THEME.BG_GRADIENT}
       style={styles.container}
     >
       <Header />
@@ -124,7 +125,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   errorText: {
     color: 'red',

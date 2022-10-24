@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
+import { THEME } from '../theme/theme';
 import { DeleteTodo } from './DeleteTodo';
 import { AppText } from './ui/AppText';
 
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   box: {
     height: 50,
     marginBottom: 5,
-    backgroundColor: '#eee',
+    backgroundColor: THEME.COLOR_LIGHT_GRAY,
     borderRadius: 8,
     justifyContent: 'center',
   },

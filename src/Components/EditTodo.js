@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { THEME } from '../theme/theme';
 
 export const EditTodo = () => {
   return (
@@ -11,7 +12,7 @@ export const EditTodo = () => {
 
 const styles = StyleSheet.create({
   box: {
-    backgroundColor: '#fc9e3e',
+    backgroundColor: THEME.COLOR_ORANGE,
     borderRadius: 8,
     height: 50,
     width: 90,
