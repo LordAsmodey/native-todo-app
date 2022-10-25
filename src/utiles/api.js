@@ -6,7 +6,10 @@ const todosUrl = `${BASE_URL}/todos`;
 export const getTodos = () => {
   return fetch(getTodosUrl)
     .then(res => res.json())
-    .catch(error => console.log('Error: ' + error));
+    .catch(error => {
+      console.log('Error: ' + error);
+      throw new Error();
+    });
 };
 
 export const addTodo = (todo) => {
@@ -18,7 +21,10 @@ export const addTodo = (todo) => {
     body: JSON.stringify(todo),
   })
     .then(res => res.json())
-    .catch(error => console.log('Error: ' + error));
+    .catch(error => {
+      console.log('Error: ' + error);
+      throw new Error();
+    });
 };
 
 export const editTodoById = (id, data) => {
@@ -30,7 +36,10 @@ export const editTodoById = (id, data) => {
     body: JSON.stringify(data),
   })
     .then(res => res.json())
-    .catch(error => console.log('Error: ' + error));
+    .catch(error => {
+      console.log('Error: ' + error);
+      throw new Error();
+    });
 };
 
 export const deleteTodoById = (id) => {
@@ -38,5 +47,8 @@ export const deleteTodoById = (id) => {
     method: 'DELETE'
   })
     .then(res => res.json())
-    .catch(error => console.log('Error: ' + error));
+    .catch(error => {
+      console.log('Error: ' + error);
+      throw new Error();
+    });
 };

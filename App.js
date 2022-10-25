@@ -17,12 +17,16 @@ import {
 import { Loader } from './src/Components/Loader';
 import { AppTextBold } from './src/Components/ui/AppTextBold';
 import { EmptyTodoList } from './src/Components/EmptyTodoList';
+import { BottomPanel } from './src/Components/BottomPanel';
 
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [isMainDataLoading, setIsMainDataLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [sortType, setSortType] = useState(null);
+  const [filterType, setFilterType] = useState(null);
+
   SplashScreen.preventAutoHideAsync();
 
   const loadFonts = () => {
@@ -95,6 +99,33 @@ export default function App() {
       .finally(() => setIsLoading(false));
   };
 
+  const prepareTodos = (sType, fType) => {
+    let preparedTodos = todos;
+
+    switch (fType) {
+    case 'inProcess':
+      preparedTodos = todos.filter(todo => !todo.completed);
+      break;
+    case 'done':
+      preparedTodos = todos.filter(todo => todo.completed);
+      break;
+    default:
+      preparedTodos = todos;
+    }
+
+    if (sType === 'asc') {
+      return preparedTodos.sort((t1, t2) => t1.title.localeCompare(t2.title));
+    }
+
+    if (sType === 'desc') {
+      return preparedTodos.sort((t1, t2) => t2.title.localeCompare(t1.title));
+    }
+
+    return preparedTodos;
+  };
+
+  const preparedTodos = prepareTodos(sortType, filterType);
+
   if (isMainDataLoading) {
     return <Loader />;
   }
@@ -104,24 +135,31 @@ export default function App() {
       colors={THEME.BG_GRADIENT}
       style={styles.container}
     >
-      <Header />
-      <AddTodoForm onAddTodo={addNewTodoHandler}/>
+      <Header isLoading={isLoading} />
+      <AddTodoForm onAddTodo={addNewTodoHandler} />
       {isError && (
         <AppTextBold style={styles.errorText}>
           Something went wrong!
         </AppTextBold>
       )}
       {!isError && todos.length > 0 && (
-        <TodoList
-          todos={todos}
-          onChangeTodoStatus={todoStatusToggle}
-          onDeleteTodo={deleteTodoHandler}
-        />
+        <>
+          <TodoList
+            todos={preparedTodos}
+            onChangeTodoStatus={todoStatusToggle}
+            onDeleteTodo={deleteTodoHandler}
+          />
+          <BottomPanel
+            sortType={sortType}
+            onChangeSortType={setSortType}
+            filterType={filterType}
+            onChangeFilterType={setFilterType}
+          />
+        </>
       )}
       {!isError && todos.length === 0 && (
         <EmptyTodoList />
       )}
-      {isLoading && <Loader />}
     </LinearGradient>
   );
 }

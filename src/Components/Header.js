@@ -2,11 +2,15 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { THEME } from '../theme/theme';
 import { AppTextBold } from './ui/AppTextBold';
+import { Loader } from './Loader';
 
-export const Header = () => {
+export const Header = ({ isLoading }) => {
   return (
     <View style={styles.header}>
-      <AppTextBold>Todo List</AppTextBold>
+      {isLoading
+        ? <Loader/>
+        : <AppTextBold>Todo List</AppTextBold>
+      }
     </View>
   );
 };
